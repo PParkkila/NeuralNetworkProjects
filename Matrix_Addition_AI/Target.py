@@ -30,8 +30,8 @@ class Target:
             self._targets[2].append(self._inputs[2][v] + self._inputs[6][v])
             self._targets[3].append(self._inputs[3][v] + self._inputs[7][v])
 
-        print("Inputs: " + self._inputs.__str__())
-        print("Targets: " + self._targets.__str__())
+        # print("Inputs: " + self._inputs.__str__())
+        # print("Targets: " + self._targets.__str__())
 
             
 # target = Target()

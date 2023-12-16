@@ -8,17 +8,39 @@ from time import sleep
 def main():
     target = Target()
     network = Network()
-    repeatForwardPass(0, 10, target, network)
+    repeatForwardPass(0, 10000, target, network)
+    network.clear_temps()
 
-    repeatForwardPass(10,10,target, network)
-    repeatForwardPass(20,10,target, network)
-    repeatForwardPass(30,10,target, network)
+    repeatForwardPass(10000,10000,target, network)
+    network.clear_temps()
+    repeatForwardPass(20000,10000,target, network)
+    network.clear_temps()
+    repeatForwardPass(30000,10000,target, network)
+    network.clear_temps()
 
+
+def errorCalculation(target: list, network: Network):
+    """
+    Updates the error values for the current network to be the average error
+    :param list target: the 4x1 target matrix of values
+    :param Network network: The network to forward feed through
+    """
+
+    ## find total cost of forward propagation
+
+    # cost = each element in aL minus corresponding element squared
+    for i in range(0,4):
+        network._error_total[i][0] = pow((network._activationL[i][0] - target[i][0]), 2)
 
 
 
 def feedForwardPass(x: list, target: list, network: Network):
-
+    """
+    Single pass feeding forward through the network with the specified input
+   :param list x: The input 8x1 matrix
+   :param list target: the target training 4x1 matrix
+   :param Network network: The network to forward feed through
+   """
     # one pass of feed forward =>
 
 
@@ -115,13 +137,7 @@ def feedForwardPass(x: list, target: list, network: Network):
 
 
 
-    ## find total cost of forward propagation
-
-    # cost = each element in aL minus corresponding element squared
-    for i in range(0,4):
-        network._error_total[i][0] = pow((network._activationL[i][0] - target[i][0]), 2)
-
-    print("Total error" + network._error_total.__str__())
+    errorCalculation(target, network)
     
 
     ## need to repeat m-times for a batch of entries
