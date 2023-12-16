@@ -1,4 +1,4 @@
-from random import randint
+from random import random
 
 class Target:
 
@@ -22,7 +22,7 @@ class Target:
 
 
             for i in range(0,8):
-                self._inputs[i].append(randint(-10,10))
+                self._inputs[i].append((random() * 20) - 10)
 
             ## of the form [current row][v]
             self._targets[0].append(self._inputs[0][v] + self._inputs[4][v])
