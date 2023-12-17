@@ -61,7 +61,15 @@ class Network:
         ## total error vector for single instance
         self._error_total = [[0.0],[0.0],[0.0],[0.0]]
 
+    # def __init__(x: list, self):
+    #     self.__init__(self)
+    #     self._inputX = [[0.0],[0.0],[0.0],[0.0],[0.0],[0.0],[0.0],[0.0]]
+    #     for i in range(0,8):
+    #         self._inputX[i][0] = x[i][0]
 
+
+
+        
 
 
     def clear_temps(self):
@@ -72,10 +80,6 @@ class Network:
         self._activationL = [[0.0],[0.0],[0.0],[0.0]]
         self._z3 = [[0.0],[0.0],[0.0],[0.0]]
         self._error_total = [[0.0],[0.0],[0.0],[0.0]]
-
-
-
-
 
 
 if __name__ == "__main__":

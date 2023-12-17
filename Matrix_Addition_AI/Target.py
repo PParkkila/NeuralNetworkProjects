@@ -32,6 +32,3 @@ class Target:
 
         # print("Inputs: " + self._inputs.__str__())
         # print("Targets: " + self._targets.__str__())
-
-            
-# target = Target()
