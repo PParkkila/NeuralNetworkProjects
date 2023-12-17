@@ -161,7 +161,8 @@ Used to repeat the forward pass through the algorithm
                   [target._targets[2][n + k]],
                   [target._targets[3][n + k]]]
         feedForwardPass(xArr, targetArr, network)
-        gradientDescentDerivatives(xArr, network)
+        gradientDescent(gradientDescentDerivatives(xArr, network), network)
+        ##TODO deal with the placement of the gradient descent action
 
 
     for i in range(0,4):
@@ -184,7 +185,7 @@ Implementation of the ReLu activation function.
     else:
         return 0.0
 
-def gradientDescentDerivatives(x: list[list[float]],network: Network):
+def gradientDescentDerivatives(x: list[list[float]], network: Network):
     """
 Calculates the derivatives of the cost function required for gradient descent
    :param list x: The input 8x1 matrix
@@ -347,10 +348,71 @@ Calculates the derivatives of the cost function required for gradient descent
     for i in range(0,4):
         gradientCwrtWB.append(dCdb3[i][0])
 
-    print(gradientCwrtWB, end="\n\n\n\n")
-    sleep(2)
+    # print(gradientCwrtWB, end="\n\n\n\n")
+    # sleep(2)
 
     return gradientCwrtWB
+
+def gradientDescent(gradient: list[float], network: Network):
+    """
+Implementation of the gradient descent algorithm to change weights and biases in the neural network to optimize the results.
+    :param list gradient: the list containing all derivatives from the jacobians unrolled
+    :param Network network: The network to forward feed through
+    """
+
+
+    ## algorithm = M_i = M_i-1 - R(gradient)
+
+    # print("Gradient Original: " + gradient.__str__(), end="\n\n\n")
+    # sleep(2)
+    learnRate = -10.0
+
+    for i in range(0, len(gradient)):
+        gradient[i] = gradient[i] * learnRate
+
+    # print("Gradient New: " + gradient.__str__(), end="\n\n\n")
+    # sleep(2)
+
+
+    ## need to update the values throught the network
+        
+    ##update values for network w1 -> 10x8 matrix
+    for i in range(0,10):
+        for j in range(0,8):
+            network._weights1[i][j] = network._weights1[i][j] + gradient[(i * 8) + j]
+
+
+    # same thing for network w2 -> 8x10 matrix
+    
+    for i in range(0,8):
+        for j in range(0,10):
+            network._weights2[i][j] = network._weights2[i][j] + gradient[(i * 10) + j + 80]
+
+    # same thing for network w3 -> 4x8 matrix
+    
+    for i in range(0,4):
+        for j in range(0,8):
+            network._weights3[i][j] = network._weights3[i][j] + gradient[(i * 8) + j + 160]
+
+    ##then change the biases
+            
+    ## network b1 -> 10x1 matrix
+            
+    for i in range(0,10):
+        network._bias1[i][0] = network._bias1[i][0] + gradient[i + 192]
+
+    ## network b2 -> 8x1 matrix
+        
+    for i in range(0,8):
+        network._bias2[i][0] = network._bias2[i][0] + gradient[i + 202]
+
+    ## network b3 -> 4x1 matrix
+        
+    for i in range(0,4):
+        network._bias3[i][0] = network._bias3[i][0] + gradient[i + 210]
+
+    ## all the values should be updated now.. nothing needs to be returned
+
 
 if __name__ == "__main__":
         main()
